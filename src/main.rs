@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 use checker::Checker;
 use clap::{Parser, Subcommand};
+use codegen::Codegen;
 use ir::IRGenerator;
 use parser::Parser as LovelyParser;
 
@@ -56,13 +57,20 @@ fn compile(path: String, output_path: Option<String>) {
 
     let ir_string = ir
         .iter()
-        .map(|block| block.to_string())
+        .map(|b| b.to_string())
         .collect::<Vec<_>>()
         .join("\n");
 
+    println!("\n\nIR:");
+    println!("{ir_string}");
+    println!("-------------------------\n\nASM:");
+
+    let mut codegener = Codegen::new();
+    let asm = codegener.gen_asm(&ir);
+
     if let Some(output_path) = output_path {
-        std::fs::write(output_path, ir_string).expect("Unable to write file");
+        std::fs::write(output_path, asm).expect("Unable to write file");
     } else {
-        println!("{}", ir_string);
+        println!("{}", asm);
     }
 }

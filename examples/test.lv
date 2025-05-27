@@ -1,9 +1,6 @@
-# add :: fun (~x: Int, to y: Int) -> Int: x + y
+get_four :: fun () -> Int: 2 + 2
 
-# main :: fun () -> Int: {
-  # x :: 4
-  # y :: add(x, to: 3)
-  # y
-# }
-
-x :: {}
+main :: fun () -> Int: {
+  x :: get_four()
+  x + 3 # should exit with 7
+}
