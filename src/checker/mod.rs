@@ -90,6 +90,7 @@ impl Checker {
             .variables
             .iter()
             .enumerate()
+            .rev()
             .find(|t| t.1.scope_id == scope_id && t.1.name == var_name)
         {
             Some((index, variable.type_id))
@@ -98,6 +99,30 @@ impl Checker {
         } else {
             None
         }
+    }
+
+    fn lookup_variable_all(
+        &self,
+        var_name: &str,
+        scope_id: ScopeId,
+    ) -> Option<Vec<(VariableId, TypeId)>> {
+        let cur_scope = &self.scopes[scope_id];
+        let mut vec = self
+            .variables
+            .iter()
+            .enumerate()
+            .rev()
+            .filter(|t| t.1.scope_id == scope_id && t.1.name == var_name)
+            .map(|t| (t.0, t.1.type_id))
+            .collect::<Vec<_>>();
+        if let Some(parent_id) = cur_scope.parent_scope {
+            vec.append(
+                &mut self
+                    .lookup_variable_all(var_name, parent_id)
+                    .unwrap_or_default(),
+            );
+        }
+        if vec.is_empty() { None } else { Some(vec) }
     }
 
     fn add_variable(
@@ -139,9 +164,6 @@ impl Checker {
         type_hint: Option<TypeId>,
     ) -> Result<CheckedExpression, Error> {
         match &expr.kind {
-            ExpressionKind::Unit => {
-                self.typed_expression(CheckedExpressionData::Unit, expr.span, UNIT_ID, type_hint)
-            }
             ExpressionKind::BoolLiteral(value) => self.typed_expression(
                 CheckedExpressionData::BoolLiteral(*value),
                 expr.span,
@@ -382,52 +404,92 @@ impl Checker {
             ExpressionKind::FunctionCall { name, arguments } => {
                 let mut args = vec![];
 
-                let Some((var_id, type_id)) = self.lookup_variable(name, self.cur_scope) else {
-                    return Err(Error::variable_not_found(name, expr.span));
-                };
-                let ScopedType {
-                    scope_id: _,
-                    kind:
-                        TypeKind::Function {
-                            parameters,
-                            return_type,
-                        },
-                } = &self.types[type_id].clone()
-                else {
-                    return Err(Error::variable_is_not_a_function(name, expr.span));
-                };
-
-                let num_params = parameters.len();
-                let num_args = arguments.len();
-                if num_params != num_args {
-                    return Err(Error::incorrect_arg_count(num_params, num_args, expr.span));
-                }
-
-                for (param, arg) in parameters.clone().iter().zip(arguments) {
-                    if param.callsite_label != arg.label {
-                        return Err(Error::incorrect_arg_label(
-                            param.callsite_label.clone(),
-                            arg.label.clone(),
-                            expr.span,
-                        ));
-                    }
-                    let checked_arg_expr = self.check_expression(&arg.value, Some(param.ty))?;
+                for arg in arguments {
                     args.push(CheckedFunctionArgument {
                         label: arg.label.clone(),
-                        value: checked_arg_expr,
-                    })
+                        value: self.check_expression(&arg.value, None)?,
+                    });
                 }
 
-                self.typed_expression(
-                    CheckedExpressionData::FunctionCall {
-                        name: name.to_string(),
-                        arguments: args,
-                        variable_id: var_id,
-                    },
-                    expr.span,
-                    *return_type,
-                    type_hint,
-                )
+                let num_args = arguments.len();
+
+                let mut first = true;
+                let mut arg_count_errors = vec![];
+                let mut type_errors = vec![];
+                let mut label_errors = vec![];
+
+                'outer: for (var_id, type_id) in self
+                    .lookup_variable_all(name, self.cur_scope)
+                    .ok_or(Error::variable_not_found(name, expr.span))?
+                {
+                    let ScopedType {
+                        scope_id: _,
+                        kind:
+                            TypeKind::Function {
+                                parameters,
+                                return_type,
+                            },
+                    } = &self.types[type_id].clone()
+                    else {
+                        if first {
+                            Err(Error::variable_is_not_a_function(name, expr.span))?
+                        } else {
+                            // Don't assume shadowing
+                            continue 'outer;
+                        }
+                    };
+
+                    first = false;
+
+                    let num_params = parameters.len();
+                    if num_params != num_args {
+                        arg_count_errors
+                            .push(Error::incorrect_arg_count(num_params, num_args, expr.span));
+                        continue;
+                    }
+
+                    for ((param, arg), old_arg) in parameters.iter().zip(&args).zip(arguments) {
+                        if param.ty != arg.value.type_id {
+                            type_errors.push(Error::type_mismatch(
+                                param.ty,
+                                arg.value.type_id,
+                                old_arg.value.span,
+                            ));
+                            continue 'outer;
+                        }
+                        if param.callsite_label != arg.label {
+                            label_errors.push(Error::incorrect_arg_label(
+                                param.callsite_label.clone(),
+                                arg.label.clone(),
+                                expr.span,
+                            ));
+                            continue 'outer;
+                        }
+                    }
+
+                    return self.typed_expression(
+                        CheckedExpressionData::FunctionCall {
+                            name: name.to_string(),
+                            arguments: args,
+                            variable_id: var_id,
+                        },
+                        expr.span,
+                        *return_type,
+                        type_hint,
+                    );
+                }
+
+                if let Some(error) = label_errors.into_iter().next() {
+                    return Err(error);
+                }
+                if let Some(error) = type_errors.into_iter().next() {
+                    return Err(error);
+                }
+                if let Some(error) = arg_count_errors.into_iter().next() {
+                    return Err(error);
+                }
+
+                unreachable!("No error, no missing function and no success???")
             }
         }
     }
@@ -469,7 +531,6 @@ impl CheckedExpression {
 
 #[derive(PartialEq, Eq, Debug)]
 pub enum CheckedExpressionData {
-    Unit,
     BoolLiteral(bool),
     IntLiteral(isize),
     Ident {

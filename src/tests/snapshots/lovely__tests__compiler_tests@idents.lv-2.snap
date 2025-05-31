@@ -86,11 +86,60 @@ Program(
         Expression {
             span: Span {
                 start: 28,
-                end: 29,
+                end: 38,
             },
-            kind: Ident(
-                "c",
-            ),
+            kind: VariableDecl {
+                name: "c",
+                value: Expression {
+                    span: Span {
+                        start: 33,
+                        end: 38,
+                    },
+                    kind: Infix {
+                        left: Expression {
+                            span: Span {
+                                start: 33,
+                                end: 34,
+                            },
+                            kind: Ident(
+                                "c",
+                            ),
+                        },
+                        operator: Plus,
+                        right: Expression {
+                            span: Span {
+                                start: 37,
+                                end: 38,
+                            },
+                            kind: IntLiteral(
+                                3,
+                            ),
+                        },
+                    },
+                },
+                mutable: false,
+                ty: None,
+            },
+        },
+        Expression {
+            span: Span {
+                start: 60,
+                end: 66,
+            },
+            kind: VariableDecl {
+                name: "x",
+                value: Expression {
+                    span: Span {
+                        start: 65,
+                        end: 66,
+                    },
+                    kind: Ident(
+                        "c",
+                    ),
+                },
+                mutable: false,
+                ty: None,
+            },
         },
     ],
 )

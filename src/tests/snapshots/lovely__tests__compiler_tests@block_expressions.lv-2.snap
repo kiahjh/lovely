@@ -8,23 +8,25 @@ Program(
         Expression {
             span: Span {
                 start: 0,
-                end: 30,
+                end: 31,
             },
             kind: VariableDecl {
                 name: "x",
                 value: Expression {
                     span: Span {
                         start: 5,
-                        end: 30,
+                        end: 31,
                     },
                     kind: Block(
                         [
                             Expression {
                                 span: Span {
-                                    start: 9,
-                                    end: 13,
+                                    start: 10,
+                                    end: 12,
                                 },
-                                kind: Unit,
+                                kind: Block(
+                                    [],
+                                ),
                             },
                             Expression {
                                 span: Span {
@@ -37,14 +39,14 @@ Program(
                             },
                             Expression {
                                 span: Span {
-                                    start: 23,
-                                    end: 28,
+                                    start: 24,
+                                    end: 29,
                                 },
                                 kind: Infix {
                                     left: Expression {
                                         span: Span {
-                                            start: 23,
-                                            end: 24,
+                                            start: 24,
+                                            end: 25,
                                         },
                                         kind: IntLiteral(
                                             7,
@@ -53,8 +55,8 @@ Program(
                                     operator: Minus,
                                     right: Expression {
                                         span: Span {
-                                            start: 27,
-                                            end: 28,
+                                            start: 28,
+                                            end: 29,
                                         },
                                         kind: IntLiteral(
                                             4,
@@ -71,15 +73,15 @@ Program(
         },
         Expression {
             span: Span {
-                start: 32,
-                end: 43,
+                start: 33,
+                end: 44,
             },
             kind: VariableDecl {
                 name: "y",
                 value: Expression {
                     span: Span {
-                        start: 42,
-                        end: 43,
+                        start: 43,
+                        end: 44,
                     },
                     kind: Ident(
                         "x",

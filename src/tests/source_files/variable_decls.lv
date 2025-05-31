@@ -1,9 +1,9 @@
 main :: fun (): {
-  foo :: 6
+   foo :: 6
 
-  bar := 7
+   bar := 7
 
-  baz : Bool = true
+   baz : Bool = true
 
-  qux : Unit : unit
+   qux : Unit : {}
 }

@@ -109,4 +109,67 @@ input_file: src/tests/source_files/idents.lv
             end: 29,
         },
     },
+    Token {
+        kind: Colon,
+        span: Span {
+            start: 30,
+            end: 31,
+        },
+    },
+    Token {
+        kind: Colon,
+        span: Span {
+            start: 31,
+            end: 32,
+        },
+    },
+    Token {
+        kind: Identifier,
+        span: Span {
+            start: 33,
+            end: 34,
+        },
+    },
+    Token {
+        kind: Plus,
+        span: Span {
+            start: 35,
+            end: 36,
+        },
+    },
+    Token {
+        kind: IntLiteral,
+        span: Span {
+            start: 37,
+            end: 38,
+        },
+    },
+    Token {
+        kind: Identifier,
+        span: Span {
+            start: 60,
+            end: 61,
+        },
+    },
+    Token {
+        kind: Colon,
+        span: Span {
+            start: 62,
+            end: 63,
+        },
+    },
+    Token {
+        kind: Colon,
+        span: Span {
+            start: 63,
+            end: 64,
+        },
+    },
+    Token {
+        kind: Identifier,
+        span: Span {
+            start: 65,
+            end: 66,
+        },
+    },
 ]

@@ -62,9 +62,49 @@ CheckedProgram {
         CheckedExpression {
             type_id: 2,
             data: VariableDecl {
-                name: "main",
+                name: "add",
                 value: CheckedExpression {
                     type_id: 4,
+                    data: Function {
+                        parameters: [
+                            CheckedFunctionParameter {
+                                modifier: Read,
+                                labeled_at_callsite: false,
+                                internal_name: "x",
+                                external_name: None,
+                                variable_id: 3,
+                                type_id: 2,
+                            },
+                            CheckedFunctionParameter {
+                                modifier: Read,
+                                labeled_at_callsite: true,
+                                internal_name: "y",
+                                external_name: Some(
+                                    "to",
+                                ),
+                                variable_id: 4,
+                                type_id: 2,
+                            },
+                        ],
+                        return_type: 2,
+                        body: CheckedExpression {
+                            type_id: 2,
+                            data: Block(
+                                [],
+                            ),
+                        },
+                    },
+                },
+                mutable: false,
+                variable_id: 5,
+            },
+        },
+        CheckedExpression {
+            type_id: 2,
+            data: VariableDecl {
+                name: "main",
+                value: CheckedExpression {
+                    type_id: 5,
                     data: Function {
                         parameters: [],
                         return_type: 0,
@@ -106,14 +146,51 @@ CheckedProgram {
                                                 },
                                             },
                                             mutable: false,
-                                            variable_id: 3,
+                                            variable_id: 6,
+                                        },
+                                    },
+                                    CheckedExpression {
+                                        type_id: 2,
+                                        data: VariableDecl {
+                                            name: "y",
+                                            value: CheckedExpression {
+                                                type_id: 2,
+                                                data: FunctionCall {
+                                                    name: "add",
+                                                    arguments: [
+                                                        CheckedFunctionArgument {
+                                                            label: None,
+                                                            value: CheckedExpression {
+                                                                type_id: 2,
+                                                                data: Block(
+                                                                    [],
+                                                                ),
+                                                            },
+                                                        },
+                                                        CheckedFunctionArgument {
+                                                            label: Some(
+                                                                "to",
+                                                            ),
+                                                            value: CheckedExpression {
+                                                                type_id: 2,
+                                                                data: Block(
+                                                                    [],
+                                                                ),
+                                                            },
+                                                        },
+                                                    ],
+                                                    variable_id: 5,
+                                                },
+                                            },
+                                            mutable: false,
+                                            variable_id: 7,
                                         },
                                     },
                                     CheckedExpression {
                                         type_id: 0,
                                         data: Ident {
                                             name: "x",
-                                            variable_id: 3,
+                                            variable_id: 6,
                                         },
                                     },
                                 ],
@@ -122,7 +199,7 @@ CheckedProgram {
                     },
                 },
                 mutable: false,
-                variable_id: 4,
+                variable_id: 8,
             },
         },
     ],

@@ -33,10 +33,17 @@ input_file: src/tests/source_files/block_expressions.lv
         },
     },
     Token {
-        kind: Unit,
+        kind: LBrace,
         span: Span {
-            start: 9,
-            end: 13,
+            start: 10,
+            end: 11,
+        },
+    },
+    Token {
+        kind: RBrace,
+        span: Span {
+            start: 11,
+            end: 12,
         },
     },
     Token {
@@ -49,64 +56,64 @@ input_file: src/tests/source_files/block_expressions.lv
     Token {
         kind: IntLiteral,
         span: Span {
-            start: 23,
-            end: 24,
+            start: 24,
+            end: 25,
         },
     },
     Token {
         kind: Minus,
         span: Span {
-            start: 25,
-            end: 26,
+            start: 26,
+            end: 27,
         },
     },
     Token {
         kind: IntLiteral,
         span: Span {
-            start: 27,
-            end: 28,
+            start: 28,
+            end: 29,
         },
     },
     Token {
         kind: RBrace,
         span: Span {
-            start: 29,
-            end: 30,
+            start: 30,
+            end: 31,
         },
     },
     Token {
         kind: Identifier,
         span: Span {
-            start: 32,
-            end: 33,
+            start: 33,
+            end: 34,
         },
     },
     Token {
         kind: Colon,
         span: Span {
-            start: 34,
-            end: 35,
+            start: 35,
+            end: 36,
         },
     },
     Token {
         kind: Identifier,
         span: Span {
-            start: 36,
-            end: 39,
+            start: 37,
+            end: 40,
         },
     },
     Token {
         kind: Colon,
         span: Span {
-            start: 40,
-            end: 41,
+            start: 41,
+            end: 42,
         },
     },
     Token {
         kind: Identifier,
         span: Span {
-            start: 42,
-            end: 43,
+            start: 43,
+            end: 44,
         },
     },
 ]

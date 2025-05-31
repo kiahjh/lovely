@@ -128,7 +128,6 @@ impl<'src> Lexer<'src> {
                     "proto" => Token::new(Proto, cur_index, 5),
                     "impl" => Token::new(Impl, cur_index, 4),
                     "type" => Token::new(Type, cur_index, 4),
-                    "unit" => Token::new(Unit, cur_index, 4),
                     "true" => Token::new(True, cur_index, 4),
                     "false" => Token::new(False, cur_index, 5),
                     s => Token::new(Identifier, cur_index, s.len()),

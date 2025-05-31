@@ -33,10 +33,17 @@ input_file: src/tests/source_files/primitive_literals.lv
         },
     },
     Token {
-        kind: Unit,
+        kind: LBrace,
         span: Span {
             start: 91,
-            end: 95,
+            end: 92,
+        },
+    },
+    Token {
+        kind: RBrace,
+        span: Span {
+            start: 92,
+            end: 93,
         },
     },
 ]

@@ -61,8 +61,8 @@ loop: print("hi")
 # only loop loops can break with a value: `break <expr>`, but all loops
 # have break expressions that just return unit by default
 
-# in Lovely, every user-defined type is an enum, but enums can have
-# fields, which can give them struct-like behavior. this means that
+# in Lovely, every user-defined type is either an enum or a tuple, but enums
+# can have fields, which can give them struct-like behavior. this means that
 # there's no clear distinction in Lovely between product and sum types,
 # and types can have properties of both
 
@@ -98,11 +98,12 @@ type Penguin {
   is_friendly :: true
 }
 
+
 lil_blue :: Penguin@LittleBlue
 lil_blue.swim() # -> "sploosh"
 lil_blue.is_friendly # -> true
 
-emperor :: Penguin$ # makes an Emperor penguin, since Emperor was marked with `$`
+emperor :: Penguin$ {} # makes an Emperor penguin, since Emperor was marked with `$`
 
 # if you don't specify any variants for your type, you get one for free
 # called `$Default`, which, because it uses `$`, is the default variant:
@@ -116,6 +117,10 @@ scary_creature :: Creature$ {
   can_bite = true,
   weight_in_kg = 200,
 }
+
+# btw, all anonymous type instantiations (when there's only one variant) are prefixed with `$` as well, so you can have something like:
+x :: ${ foo = 4, bar = 8 } # infered as { foo: Int bar: Int }
+y :: $(34, 4) # infered as (Int, Int)
 
 # fields can have default values as well:
 type Person {
@@ -172,7 +177,7 @@ impl Iterator(List('a)) {
   next = fun (mut self) -> Option(Item): {
     match self {
       @Empty: None
-      @Cons({ head, tail }): {
+      @Cons(${ head, tail }): {
         self = tail
         head
       }
@@ -237,11 +242,11 @@ unsafe {
 # raw pointers
 
 x := 8
-xp : *Int : &x
+xp : *Int : x.&
 consumes(give x) # x dies, so xp is pointing to garbage
 
 # unsafe blocks are required for pointer dereferencing, but not for pointer creation
 unsafe {
-  print(*xp)
-  *xp = 30 # pointer derefs are valid lvalues
+  print(xp.*)
+  xp.* = 30 # pointer derefs are valid lvalues
 }

@@ -5,14 +5,20 @@ input_file: src/tests/source_files/functions.lv
 ---
 ENTRY:
   add#2 := FUN#0
-  main#4 := FUN#2
-  goto FUN#2
+  add#5 := FUN#2
+  main#8 := FUN#3
+  goto FUN#3
 
 FUN#0:
   t1 := x#0 + y#1
   ret t1
 
 FUN#2:
-  t3 := add#2(4, 9)
-  x#3 := t3
-  exit x#3
+  ret unit
+
+FUN#3:
+  t4 := add#2(4, 9)
+  x#6 := t4
+  t5 := add#5(unit, unit)
+  y#7 := t5
+  exit x#6

@@ -44,9 +44,11 @@ Program(
         Expression {
             span: Span {
                 start: 91,
-                end: 95,
+                end: 93,
             },
-            kind: Unit,
+            kind: Block(
+                [],
+            ),
         },
     ],
 )

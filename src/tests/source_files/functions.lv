@@ -1,7 +1,11 @@
 add :: fun (~x: Int, to y: Int) -> Int: x + y
 
-main :: fun() -> Int: {
-  x :: add(4, to: 9)
+add :: fun (~x: Unit, to y: Unit) -> Unit: {}
 
-  x
+main :: fun() -> Int: {
+   x :: add(4, to: 9)
+
+   y :: add({}, to: {})
+
+   x
 }

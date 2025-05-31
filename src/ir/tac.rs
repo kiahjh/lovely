@@ -121,7 +121,7 @@ impl Display for Instruction {
     }
 }
 
-type TempId = usize;
+pub type TempId = usize;
 
 #[derive(Clone, Debug)]
 pub struct Entity {

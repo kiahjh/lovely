@@ -16,7 +16,6 @@ pub enum TokenKind {
     Proto,  // proto
     Impl,   // impl
     Type,   // type
-    Unit,   // unit
     True,   // true
     False,  // false
 
@@ -69,7 +68,6 @@ impl Display for TokenKind {
             TokenKind::Proto => "proto",
             TokenKind::Impl => "impl",
             TokenKind::Type => "type",
-            TokenKind::Unit => "unit",
             TokenKind::True => "true",
             TokenKind::False => "false",
             TokenKind::LParen => "(",

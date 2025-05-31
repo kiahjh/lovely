@@ -3,4 +3,6 @@ b :: 9
 
 c :: a + b
 
-c
+c :: c + 3 # Detects shadowing
+
+x :: c

@@ -15,7 +15,9 @@ CheckedProgram {
                         [
                             CheckedExpression {
                                 type_id: 2,
-                                data: Unit,
+                                data: Block(
+                                    [],
+                                ),
                             },
                             CheckedExpression {
                                 type_id: 1,

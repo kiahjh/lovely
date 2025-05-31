@@ -16,7 +16,6 @@ impl Expression {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ExpressionKind {
-    Unit,
     BoolLiteral(bool),
     IntLiteral(isize),
     Ident(String),
@@ -57,7 +56,7 @@ impl ExpressionKind {
         use crate::parser::ast::ExpressionKind::*;
 
         match self {
-            Unit | BoolLiteral(_) | IntLiteral(_) | Ident(_) | Function { .. } => true,
+            BoolLiteral(_) | IntLiteral(_) | Ident(_) | Function { .. } => true,
             Block(expressions) => expressions.iter().all(|expr| expr.kind.is_const()),
             Prefix { expression, .. } => expression.kind.is_const(),
             Infix { left, right, .. } => left.kind.is_const() && right.kind.is_const(),

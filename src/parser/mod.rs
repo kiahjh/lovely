@@ -43,7 +43,7 @@ impl Error {
 pub struct Parser<'src> {
     source: String,
     lexer: Peekable<Lexer<'src>>,
-    inside_function: bool,
+    inside_function: usize,
 }
 
 impl<'src> Parser<'src> {
@@ -52,7 +52,7 @@ impl<'src> Parser<'src> {
         Self {
             source: source.to_string(),
             lexer,
-            inside_function: false,
+            inside_function: 0,
         }
     }
 
@@ -139,7 +139,7 @@ impl<'src> Parser<'src> {
             }
         }
 
-        if expr.kind.is_const() || self.inside_function {
+        if expr.kind.is_const() || self.inside_function != 0 {
             Ok(expr)
         } else {
             Err(Error::IllegalGlobalExpression(expr))
@@ -151,7 +151,6 @@ impl<'src> Parser<'src> {
         match peek_token_kind {
             IntLiteral => Ok(Box::new(|parser| parser.parse_int_literal())),
             True | False => Ok(Box::new(|parser| parser.parse_bool_literal())),
-            Unit => Ok(Box::new(|parser| parser.parse_unit())),
             LBrace => Ok(Box::new(|parser| parser.parse_block_expression())),
             Identifier => {
                 let (name, span) = self.expect_ident()?;
@@ -227,11 +226,6 @@ impl<'src> Parser<'src> {
             }
             tok => Err(Error::expected("true or false", &tok.to_string())),
         }
-    }
-
-    fn parse_unit(&mut self) -> Result<Expression, Error> {
-        let span = self.expect_token(Unit)?;
-        Ok(Expression::new(ExpressionKind::Unit, span))
     }
 
     fn parse_variable_ident(&mut self, name: &str, span: Span) -> Result<Expression, Error> {
@@ -380,9 +374,9 @@ impl<'src> Parser<'src> {
 
         self.expect_token(Colon)?;
 
-        self.inside_function = true;
+        self.inside_function += 1;
         let body = self.parse_expression(Precedence::Lowest)?;
-        self.inside_function = false;
+        self.inside_function -= 1;
 
         let end_span = body.span;
 

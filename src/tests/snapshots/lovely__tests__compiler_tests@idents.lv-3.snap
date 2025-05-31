@@ -62,10 +62,45 @@ CheckedProgram {
             },
         },
         CheckedExpression {
-            type_id: 0,
-            data: Ident {
+            type_id: 2,
+            data: VariableDecl {
                 name: "c",
-                variable_id: 2,
+                value: CheckedExpression {
+                    type_id: 0,
+                    data: Infix {
+                        left: CheckedExpression {
+                            type_id: 0,
+                            data: Ident {
+                                name: "c",
+                                variable_id: 2,
+                            },
+                        },
+                        operator: Plus,
+                        right: CheckedExpression {
+                            type_id: 0,
+                            data: IntLiteral(
+                                3,
+                            ),
+                        },
+                    },
+                },
+                mutable: false,
+                variable_id: 3,
+            },
+        },
+        CheckedExpression {
+            type_id: 2,
+            data: VariableDecl {
+                name: "x",
+                value: CheckedExpression {
+                    type_id: 0,
+                    data: Ident {
+                        name: "c",
+                        variable_id: 3,
+                    },
+                },
+                mutable: false,
+                variable_id: 4,
             },
         },
     ],

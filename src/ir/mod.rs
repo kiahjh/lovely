@@ -7,7 +7,7 @@ use crate::{
 };
 use tac::{BasicBlock, Entity, Instruction, Label, Type, Value};
 
-mod tac;
+pub mod tac;
 
 type BlockId = usize;
 
@@ -84,9 +84,8 @@ impl IRGenerator {
         self.blocks
     }
 
-    pub fn expression_ir(&mut self, expr: &CheckedExpression) -> Entity {
+    fn expression_ir(&mut self, expr: &CheckedExpression) -> Entity {
         match &expr.data {
-            CheckedExpressionData::Unit => Entity::unit(),
             CheckedExpressionData::BoolLiteral(val) => Entity::bool(*val),
             CheckedExpressionData::IntLiteral(val) => Entity::int_literal(*val),
             CheckedExpressionData::Ident { name, variable_id } => {
