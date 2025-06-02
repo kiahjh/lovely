@@ -4,7 +4,7 @@
 - [x] bitwise operators
 - [ ] shift operators (`<<`, `>>`)
 - [ ] logical operators (`&&`, `||`)
-- [ ] deal with shadowing
+- [x] deal with shadowing
 - [ ] error handling
 
 # infra
