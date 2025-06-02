@@ -136,14 +136,14 @@ Program(
         Expression {
             span: Span {
                 start: 94,
-                end: 169,
+                end: 172,
             },
             kind: VariableDecl {
                 name: "main",
                 value: Expression {
                     span: Span {
                         start: 102,
-                        end: 169,
+                        end: 172,
                     },
                     kind: Function {
                         parameters: [],
@@ -155,21 +155,21 @@ Program(
                         body: Expression {
                             span: Span {
                                 start: 116,
-                                end: 169,
+                                end: 172,
                             },
                             kind: Block(
                                 [
                                     Expression {
                                         span: Span {
-                                            start: 120,
-                                            end: 138,
+                                            start: 121,
+                                            end: 139,
                                         },
                                         kind: VariableDecl {
                                             name: "x",
                                             value: Expression {
                                                 span: Span {
-                                                    start: 125,
-                                                    end: 138,
+                                                    start: 126,
+                                                    end: 139,
                                                 },
                                                 kind: FunctionCall {
                                                     name: "add",
@@ -178,8 +178,8 @@ Program(
                                                             label: None,
                                                             value: Expression {
                                                                 span: Span {
-                                                                    start: 129,
-                                                                    end: 130,
+                                                                    start: 130,
+                                                                    end: 131,
                                                                 },
                                                                 kind: IntLiteral(
                                                                     4,
@@ -192,8 +192,8 @@ Program(
                                                             ),
                                                             value: Expression {
                                                                 span: Span {
-                                                                    start: 136,
-                                                                    end: 137,
+                                                                    start: 137,
+                                                                    end: 138,
                                                                 },
                                                                 kind: IntLiteral(
                                                                     9,
@@ -209,15 +209,15 @@ Program(
                                     },
                                     Expression {
                                         span: Span {
-                                            start: 142,
-                                            end: 162,
+                                            start: 144,
+                                            end: 164,
                                         },
                                         kind: VariableDecl {
                                             name: "y",
                                             value: Expression {
                                                 span: Span {
-                                                    start: 147,
-                                                    end: 162,
+                                                    start: 149,
+                                                    end: 164,
                                                 },
                                                 kind: FunctionCall {
                                                     name: "add",
@@ -226,8 +226,8 @@ Program(
                                                             label: None,
                                                             value: Expression {
                                                                 span: Span {
-                                                                    start: 151,
-                                                                    end: 153,
+                                                                    start: 153,
+                                                                    end: 155,
                                                                 },
                                                                 kind: Block(
                                                                     [],
@@ -240,8 +240,8 @@ Program(
                                                             ),
                                                             value: Expression {
                                                                 span: Span {
-                                                                    start: 159,
-                                                                    end: 161,
+                                                                    start: 161,
+                                                                    end: 163,
                                                                 },
                                                                 kind: Block(
                                                                     [],
@@ -257,8 +257,8 @@ Program(
                                     },
                                     Expression {
                                         span: Span {
-                                            start: 166,
-                                            end: 167,
+                                            start: 169,
+                                            end: 170,
                                         },
                                         kind: Ident(
                                             "x",

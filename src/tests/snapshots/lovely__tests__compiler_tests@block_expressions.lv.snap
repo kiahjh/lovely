@@ -35,85 +35,85 @@ input_file: src/tests/source_files/block_expressions.lv
     Token {
         kind: LBrace,
         span: Span {
-            start: 9,
-            end: 10,
-        },
-    },
-    Token {
-        kind: RBrace,
-        span: Span {
             start: 10,
             end: 11,
         },
     },
     Token {
+        kind: RBrace,
+        span: Span {
+            start: 11,
+            end: 12,
+        },
+    },
+    Token {
         kind: True,
         span: Span {
-            start: 14,
-            end: 18,
+            start: 16,
+            end: 20,
         },
     },
     Token {
         kind: IntLiteral,
         span: Span {
-            start: 21,
-            end: 22,
+            start: 24,
+            end: 25,
         },
     },
     Token {
         kind: Minus,
         span: Span {
-            start: 23,
-            end: 24,
+            start: 26,
+            end: 27,
         },
     },
     Token {
         kind: IntLiteral,
         span: Span {
-            start: 25,
-            end: 26,
+            start: 28,
+            end: 29,
         },
     },
     Token {
         kind: RBrace,
-        span: Span {
-            start: 27,
-            end: 28,
-        },
-    },
-    Token {
-        kind: Identifier,
         span: Span {
             start: 30,
             end: 31,
         },
     },
     Token {
-        kind: Colon,
-        span: Span {
-            start: 32,
-            end: 33,
-        },
-    },
-    Token {
         kind: Identifier,
         span: Span {
-            start: 34,
-            end: 37,
+            start: 33,
+            end: 34,
         },
     },
     Token {
         kind: Colon,
         span: Span {
-            start: 38,
-            end: 39,
+            start: 35,
+            end: 36,
         },
     },
     Token {
         kind: Identifier,
         span: Span {
-            start: 40,
-            end: 41,
+            start: 37,
+            end: 40,
+        },
+    },
+    Token {
+        kind: Colon,
+        span: Span {
+            start: 41,
+            end: 42,
+        },
+    },
+    Token {
+        kind: Identifier,
+        span: Span {
+            start: 43,
+            end: 44,
         },
     },
 ]

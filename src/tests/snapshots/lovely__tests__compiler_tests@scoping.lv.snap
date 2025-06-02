@@ -35,15 +35,8 @@ input_file: src/tests/source_files/scoping.lv
     Token {
         kind: Identifier,
         span: Span {
-            start: 9,
-            end: 10,
-        },
-    },
-    Token {
-        kind: Colon,
-        span: Span {
-            start: 11,
-            end: 12,
+            start: 10,
+            end: 11,
         },
     },
     Token {
@@ -54,115 +47,122 @@ input_file: src/tests/source_files/scoping.lv
         },
     },
     Token {
+        kind: Colon,
+        span: Span {
+            start: 13,
+            end: 14,
+        },
+    },
+    Token {
         kind: LBrace,
         span: Span {
-            start: 14,
-            end: 15,
+            start: 15,
+            end: 16,
         },
     },
     Token {
         kind: Identifier,
-        span: Span {
-            start: 20,
-            end: 21,
-        },
-    },
-    Token {
-        kind: Colon,
-        span: Span {
-            start: 22,
-            end: 23,
-        },
-    },
-    Token {
-        kind: Colon,
         span: Span {
             start: 23,
             end: 24,
         },
     },
     Token {
-        kind: IntLiteral,
+        kind: Colon,
         span: Span {
             start: 25,
             end: 26,
         },
     },
     Token {
-        kind: Identifier,
+        kind: Colon,
         span: Span {
-            start: 31,
-            end: 32,
-        },
-    },
-    Token {
-        kind: Minus,
-        span: Span {
-            start: 33,
-            end: 34,
+            start: 26,
+            end: 27,
         },
     },
     Token {
         kind: IntLiteral,
         span: Span {
-            start: 35,
-            end: 37,
-        },
-    },
-    Token {
-        kind: RBrace,
-        span: Span {
-            start: 40,
-            end: 41,
+            start: 28,
+            end: 29,
         },
     },
     Token {
         kind: Identifier,
         span: Span {
-            start: 44,
-            end: 45,
+            start: 36,
+            end: 37,
         },
     },
     Token {
-        kind: Plus,
+        kind: Minus,
+        span: Span {
+            start: 38,
+            end: 39,
+        },
+    },
+    Token {
+        kind: IntLiteral,
+        span: Span {
+            start: 40,
+            end: 42,
+        },
+    },
+    Token {
+        kind: RBrace,
         span: Span {
             start: 46,
             end: 47,
         },
     },
     Token {
-        kind: IntLiteral,
-        span: Span {
-            start: 48,
-            end: 50,
-        },
-    },
-    Token {
-        kind: RBrace,
+        kind: Identifier,
         span: Span {
             start: 51,
             end: 52,
         },
     },
     Token {
-        kind: Identifier,
+        kind: Plus,
         span: Span {
-            start: 54,
-            end: 55,
-        },
-    },
-    Token {
-        kind: Minus,
-        span: Span {
-            start: 56,
-            end: 57,
+            start: 53,
+            end: 54,
         },
     },
     Token {
         kind: IntLiteral,
         span: Span {
+            start: 55,
+            end: 57,
+        },
+    },
+    Token {
+        kind: RBrace,
+        span: Span {
             start: 58,
             end: 59,
+        },
+    },
+    Token {
+        kind: Identifier,
+        span: Span {
+            start: 61,
+            end: 62,
+        },
+    },
+    Token {
+        kind: Minus,
+        span: Span {
+            start: 63,
+            end: 64,
+        },
+    },
+    Token {
+        kind: IntLiteral,
+        span: Span {
+            start: 65,
+            end: 66,
         },
     },
 ]

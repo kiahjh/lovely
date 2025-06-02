@@ -364,15 +364,8 @@ input_file: src/tests/source_files/functions.lv
     Token {
         kind: Identifier,
         span: Span {
-            start: 120,
-            end: 121,
-        },
-    },
-    Token {
-        kind: Colon,
-        span: Span {
-            start: 122,
-            end: 123,
+            start: 121,
+            end: 122,
         },
     },
     Token {
@@ -383,70 +376,70 @@ input_file: src/tests/source_files/functions.lv
         },
     },
     Token {
-        kind: Identifier,
+        kind: Colon,
         span: Span {
-            start: 125,
-            end: 128,
+            start: 124,
+            end: 125,
         },
     },
     Token {
-        kind: LParen,
+        kind: Identifier,
         span: Span {
-            start: 128,
+            start: 126,
             end: 129,
         },
     },
     Token {
-        kind: IntLiteral,
+        kind: LParen,
         span: Span {
             start: 129,
             end: 130,
         },
     },
     Token {
-        kind: Comma,
+        kind: IntLiteral,
         span: Span {
             start: 130,
             end: 131,
         },
     },
     Token {
+        kind: Comma,
+        span: Span {
+            start: 131,
+            end: 132,
+        },
+    },
+    Token {
         kind: Identifier,
         span: Span {
-            start: 132,
-            end: 134,
+            start: 133,
+            end: 135,
         },
     },
     Token {
         kind: Colon,
         span: Span {
-            start: 134,
-            end: 135,
+            start: 135,
+            end: 136,
         },
     },
     Token {
         kind: IntLiteral,
-        span: Span {
-            start: 136,
-            end: 137,
-        },
-    },
-    Token {
-        kind: RParen,
         span: Span {
             start: 137,
             end: 138,
         },
     },
     Token {
-        kind: Identifier,
+        kind: RParen,
         span: Span {
-            start: 142,
-            end: 143,
+            start: 138,
+            end: 139,
         },
     },
     Token {
-        kind: Colon,
+        kind: Identifier,
         span: Span {
             start: 144,
             end: 145,
@@ -455,92 +448,99 @@ input_file: src/tests/source_files/functions.lv
     Token {
         kind: Colon,
         span: Span {
-            start: 145,
-            end: 146,
+            start: 146,
+            end: 147,
+        },
+    },
+    Token {
+        kind: Colon,
+        span: Span {
+            start: 147,
+            end: 148,
         },
     },
     Token {
         kind: Identifier,
         span: Span {
-            start: 147,
-            end: 150,
-        },
-    },
-    Token {
-        kind: LParen,
-        span: Span {
-            start: 150,
-            end: 151,
-        },
-    },
-    Token {
-        kind: LBrace,
-        span: Span {
-            start: 151,
+            start: 149,
             end: 152,
         },
     },
     Token {
-        kind: RBrace,
+        kind: LParen,
         span: Span {
             start: 152,
             end: 153,
         },
     },
     Token {
-        kind: Comma,
+        kind: LBrace,
         span: Span {
             start: 153,
             end: 154,
         },
     },
     Token {
-        kind: Identifier,
+        kind: RBrace,
+        span: Span {
+            start: 154,
+            end: 155,
+        },
+    },
+    Token {
+        kind: Comma,
         span: Span {
             start: 155,
-            end: 157,
+            end: 156,
+        },
+    },
+    Token {
+        kind: Identifier,
+        span: Span {
+            start: 157,
+            end: 159,
         },
     },
     Token {
         kind: Colon,
-        span: Span {
-            start: 157,
-            end: 158,
-        },
-    },
-    Token {
-        kind: LBrace,
         span: Span {
             start: 159,
             end: 160,
         },
     },
     Token {
-        kind: RBrace,
-        span: Span {
-            start: 160,
-            end: 161,
-        },
-    },
-    Token {
-        kind: RParen,
+        kind: LBrace,
         span: Span {
             start: 161,
             end: 162,
         },
     },
     Token {
+        kind: RBrace,
+        span: Span {
+            start: 162,
+            end: 163,
+        },
+    },
+    Token {
+        kind: RParen,
+        span: Span {
+            start: 163,
+            end: 164,
+        },
+    },
+    Token {
         kind: Identifier,
         span: Span {
-            start: 166,
-            end: 167,
+            start: 169,
+            end: 170,
         },
     },
     Token {
         kind: RBrace,
         span: Span {
-            start: 168,
-            end: 169,
+            start: 171,
+            end: 172,
         },
     },
 ]
