@@ -139,11 +139,13 @@ impl Codegen {
                 .to_string(),
             Value::Unit => "todo".to_string(),
             Value::Int(val) => val.to_string(),
-            Value::Bool(val) => if *val {
-                                "1".to_string()
-                                } else {
-                                "0".to_string()
-                                },
+            Value::Bool(val) => {
+                if *val {
+                    "-1".to_string()
+                } else {
+                    "0".to_string()
+                }
+            }
             Value::Variable(var) => {
                 let items = var.split("#").collect::<Vec<_>>();
                 let name = *items.first().expect("uh there's like no name");
@@ -242,10 +244,8 @@ impl Codegen {
             Instruction::Not { dest, src } => {
                 let mut register = self.entity_to_asm(dest);
                 lines.push(format!("  mov {}, {}", register, self.entity_to_asm(src)));
-                lines.push(format!("  test {}, {}", register, register));
-                lines.push("  sete al".to_string());
-                lines.push(format!("  movzx {}, al", register));
-            }, 
+                lines.push(format!("  not {}", register));
+            }
             Instruction::Assign { dest, src } => {
                 match &src.value {
                     Value::FunctionPointer(label) => {
