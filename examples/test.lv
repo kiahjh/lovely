@@ -1,6 +1,6 @@
 add :: fun (~x: Int, to y: Int) -> Int: x + y
 
 main :: fun () -> Int: {
-   subtract :: fun (~x: Int, from y: Int) -> y - x
+   subtract :: fun (~x: Int, from y: Int) -> Int: y - x
    add(20, to: subtract(3, from: 30)) # should be 47
 }
