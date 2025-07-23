@@ -1,7 +1,7 @@
 get_three :: fun () -> Int: 3
 
 main :: fun () -> Int: {
-   get_four :: fun () -> Int: 4
-
-   get_three() + get_four()
+   x :: 4 + 5
+   get_nine :: fun () -> Int: x
+   get_three() + get_nine() # should be 12
 }

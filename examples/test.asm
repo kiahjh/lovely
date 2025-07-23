@@ -4,7 +4,7 @@ global _start
 section .rodata
 
   get_three#0: dq FUN#0
-  main#2: dq FUN#1
+  main#3: dq FUN#1
 
 section .text
 
@@ -24,32 +24,40 @@ FUN#0:
 FUN#1:
   enter 0, 0
 
-  ; get_four#1 := FUN#2
-  push qword FUN#2
+  ; t2 := 4 + 5
+  mov rax, 4
+  add rax, 5
+  push qword rax
 
-  ; t3 := get_three#0()
+  ; x#1 := t2
+  push qword [rbp - 8]
+
+  ; get_nine#2 := FUN#3
+  push qword FUN#3
+
+  ; t4 := get_three#0()
   call [get_three#0]
   push qword rax
 
-  ; t4 := get_four#1()
-  call [rbp - 8]
+  ; t5 := get_nine#2()
+  call [rbp - 24]
   push qword rax
 
-  ; t5 := t3 + t4
-  mov rax, [rbp - 16]
-  add rax, [rbp - 24]
+  ; t6 := t4 + t5
+  mov rax, [rbp - 32]
+  add rax, [rbp - 40]
   push qword rax
 
-  ; exit t5
+  ; exit t6
   mov rax, 60
-  mov rdi, [rbp - 32]
+  mov rdi, [rbp - 48]
   syscall
 
 
-FUN#2:
+FUN#3:
   enter 0, 0
 
-  ; ret 4
-  mov rax, 4
+  ; ret x#1
+  mov rax, [rbp - 16]
   leave
   ret
