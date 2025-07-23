@@ -7,8 +7,9 @@ pub struct CodeGenerator {
     text_section: String,
     rodata_section: String,
     global_vars: HashSet<String>,
-    local_vars: HashMap<String, usize>,
-    current_stack_offset: usize,
+    local_vars: HashMap<String, HashMap<String, usize>>, // (function label -> (variable name -> stack offset))
+    current_stack_offset: HashMap<String, usize>,        // (function label -> stack offset)
+    current_function: Option<String>,
 }
 
 impl CodeGenerator {
@@ -18,7 +19,8 @@ impl CodeGenerator {
             rodata_section: String::new(),
             global_vars: HashSet::new(),
             local_vars: HashMap::new(),
-            current_stack_offset: 0,
+            current_stack_offset: HashMap::new(),
+            current_function: None,
         }
     }
 
@@ -38,14 +40,29 @@ impl CodeGenerator {
             self.text_section.push('\n');
         } else {
             self.text_section += &block.label;
+            self.current_function = Some(block.label.clone());
             self.text_section.push_str(":\n");
             self.text_section.push_str("  enter 0, 0\n\n");
 
-            for param in &block.parameters {
-                self.local_vars
-                    .insert(param.name.clone(), self.current_stack_offset);
-                self.current_stack_offset += param.ty.size_in_bytes();
+            let mut this_function_locals = HashMap::new();
+            let mut this_function_stack_offset = 0;
+
+            if !block.parameters.is_empty() {
+                self.text_section
+                    .push_str("  ; register parameters as local variables\n");
+                for (index, param) in block.parameters.iter().enumerate() {
+                    this_function_locals.insert(param.name.clone(), this_function_stack_offset);
+                    this_function_stack_offset += param.ty.size_in_bytes();
+                    self.text_section
+                        .push_str(&format!("  push [rbp + {}]\n", (index + 1) * 8 + 8));
+                }
+                self.text_section.push_str("\n");
             }
+
+            self.local_vars
+                .insert(block.label.clone(), this_function_locals);
+            self.current_stack_offset
+                .insert(block.label.clone(), this_function_stack_offset);
 
             for instr in &block.instructions {
                 self.instruction_codegen(instr);
@@ -128,9 +145,11 @@ impl CodeGenerator {
             }
             Instruction::Assign { dest, src } => match (&dest.value, &src.ty) {
                 (Value::Variable(name), ty) => {
-                    self.local_vars
-                        .insert(name.to_string(), self.current_stack_offset);
-                    self.current_stack_offset += ty.size_in_bytes();
+                    let (this_function_locals, this_function_stack_offset) =
+                        self.function_locals_and_offset();
+
+                    this_function_locals.insert(name.to_string(), *this_function_stack_offset);
+                    *this_function_stack_offset += ty.size_in_bytes();
 
                     let src_asm = self.entity_to_asm(src);
                     self.text_section
@@ -203,13 +222,16 @@ impl CodeGenerator {
 
     fn entity_to_asm(&mut self, entity: &Entity) -> String {
         match &entity.value {
-            Value::Temp(temp_id) => format!(
-                "[rbp - {}]",
-                self.local_vars
-                    .get(&format!("t{temp_id}"))
-                    .expect(&format!("local var not found: t{temp_id}"))
-                    + 8
-            ),
+            Value::Temp(temp_id) => {
+                let (this_function_locals, _) = self.function_locals_and_offset();
+                format!(
+                    "[rbp - {}]",
+                    this_function_locals
+                        .get(&format!("t{temp_id}"))
+                        .expect(&format!("local var not found: t{temp_id}"))
+                        + 8
+                )
+            }
             Value::Unit => todo!("unit"),
             Value::Int(num) => num.to_string(),
             Value::Bool(_) => todo!("bool"),
@@ -217,9 +239,10 @@ impl CodeGenerator {
                 if let Some(var_name) = self.global_vars.get(name) {
                     return format!("[{var_name}]");
                 }
+                let (this_function_locals, _) = self.function_locals_and_offset();
                 format!(
                     "[rbp - {}]",
-                    self.local_vars
+                    this_function_locals
                         .get(name)
                         .expect(&format!("local var not found: {name}"))
                         + 8
@@ -231,9 +254,21 @@ impl CodeGenerator {
 
     fn allocate_temp_value(&mut self, temp_id: TempId, dest_entity: &Entity) {
         let name = format!("t{temp_id}");
-        self.local_vars
-            .insert(name.to_string(), self.current_stack_offset);
-        self.current_stack_offset += dest_entity.ty.size_in_bytes();
+        let (this_function_locals, this_function_stack_offset) = self.function_locals_and_offset();
+
+        this_function_locals.insert(name.to_string(), *this_function_stack_offset);
+        *this_function_stack_offset += dest_entity.ty.size_in_bytes();
+    }
+
+    fn function_locals_and_offset(&mut self) -> (&mut HashMap<String, usize>, &mut usize) {
+        (
+            self.local_vars
+                .get_mut(self.current_function.as_ref().unwrap())
+                .unwrap(),
+            self.current_stack_offset
+                .get_mut(self.current_function.as_ref().unwrap())
+                .unwrap(),
+        )
     }
 }
 

@@ -16,6 +16,10 @@ _start:
 FUN#0:
   enter 0, 0
 
+  ; register parameters as local variables
+  push [rbp + 16]
+  push [rbp + 24]
+
   ; t1 := x#0 + y#1
   mov rax, [rbp - 8]
   add rax, [rbp - 16]
@@ -37,5 +41,5 @@ FUN#2:
 
   ; exit t3
   mov rax, 60
-  mov rdi, [rbp - 32]
+  mov rdi, [rbp - 8]
   syscall
