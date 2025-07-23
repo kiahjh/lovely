@@ -54,7 +54,7 @@ impl CodeGenerator {
                     this_function_locals.insert(param.name.clone(), this_function_stack_offset);
                     this_function_stack_offset += param.ty.size_in_bytes();
                     self.text_section
-                        .push_str(&format!("  push [rbp + {}]\n", (index + 1) * 8 + 8));
+                        .push_str(&format!("  push qword [rbp + {}]\n", (index + 1) * 8 + 8));
                 }
                 self.text_section.push_str("\n");
             }

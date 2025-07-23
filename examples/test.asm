@@ -17,8 +17,8 @@ FUN#0:
   enter 0, 0
 
   ; register parameters as local variables
-  push [rbp + 16]
-  push [rbp + 24]
+  push qword [rbp + 16]
+  push qword [rbp + 24]
 
   ; t1 := x#0 + y#1
   mov rax, [rbp - 8]
