@@ -37,6 +37,7 @@ FUN#2:
   push qword 2
   push qword 9
   call [add#2]
+  add rsp, 16
   push qword rax
 
   ; exit t3

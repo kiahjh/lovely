@@ -174,6 +174,8 @@ impl CodeGenerator {
 
                     self.text_section
                         .push_str(&format!("  call {callee_asm}\n"));
+                    self.text_section
+                        .push_str(&format!("  add rsp, {}\n", args.len() * 8));
                     self.text_section.push_str(&format!("  push qword rax\n"));
                 } else {
                     unreachable!()
