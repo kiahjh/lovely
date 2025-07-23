@@ -1,4 +1,7 @@
+get_three :: fun () -> Int: 3
+
 main :: fun () -> Int: {
-   get_three :: fun () -> Int: 3
-   get_three()
+   get_four :: fun () -> Int: 4
+
+   get_three() + get_four()
 }
