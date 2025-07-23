@@ -2,14 +2,36 @@ use std::fmt::Display;
 
 pub type Label = String;
 
+pub struct Parameter {
+    pub name: String,
+    pub ty: Type,
+}
+
 pub struct BasicBlock {
     pub label: Label,
+    pub parameters: Vec<Parameter>,
     pub instructions: Vec<Instruction>,
 }
 
 impl Display for BasicBlock {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "{}:", self.label)?;
+        writeln!(
+            f,
+            "{}{}:",
+            self.label,
+            if self.parameters.is_empty() {
+                "".to_string()
+            } else {
+                format!(
+                    "({})",
+                    self.parameters
+                        .iter()
+                        .map(|p| format!("{}: {}", p.name, p.ty))
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                )
+            }
+        )?;
         for instruction in &self.instructions {
             writeln!(f, "  {}", instruction)?;
         }
@@ -192,6 +214,17 @@ pub enum Type {
     Bool,
     Unit,
     Function { return_type: Box<Type> },
+}
+
+impl Display for Type {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match &self {
+            Type::Int => write!(f, "Int"),
+            Type::Bool => write!(f, "Bool"),
+            Type::Unit => write!(f, "Unit"),
+            Type::Function { .. } => write!(f, "TODO(function types)"),
+        }
+    }
 }
 
 impl Type {

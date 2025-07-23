@@ -1,7 +1,5 @@
-get_three :: fun () -> Int: 3
+add :: fun (~x: Int, to y: Int) -> Int: x + y
 
 main :: fun () -> Int: {
-   x :: 4 + 5
-   get_nine :: fun () -> Int: x
-   get_three() + get_nine() # should be 12
+   add(9, to: 2)
 }

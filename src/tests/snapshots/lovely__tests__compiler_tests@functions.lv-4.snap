@@ -9,11 +9,11 @@ ENTRY:
   main#8 := FUN#3
   goto FUN#3
 
-FUN#0:
+FUN#0(x#0: Int, y#1: Int):
   t1 := x#0 + y#1
   ret t1
 
-FUN#2:
+FUN#2(x#3: Unit, y#4: Unit):
   ret unit
 
 FUN#3:

@@ -11,17 +11,6 @@ pub struct CodeGenerator {
     current_stack_offset: usize,
 }
 
-// return value -> rax
-// arguments -> stack
-
-// foo(2, 3) -> push 3, push 2
-// foo :: fun() -> Int: {
-//   pop -> 2
-//   pop -> 3
-//
-//   mov rax, ret_value
-// }
-
 impl CodeGenerator {
     pub fn new() -> Self {
         Self {
@@ -51,6 +40,12 @@ impl CodeGenerator {
             self.text_section += &block.label;
             self.text_section.push_str(":\n");
             self.text_section.push_str("  enter 0, 0\n\n");
+
+            for param in &block.parameters {
+                self.local_vars
+                    .insert(param.name.clone(), self.current_stack_offset);
+                self.current_stack_offset += param.ty.size_in_bytes();
+            }
 
             for instr in &block.instructions {
                 self.instruction_codegen(instr);
@@ -151,6 +146,12 @@ impl CodeGenerator {
                     self.allocate_temp_value(temp_id, dest);
 
                     let callee_asm = self.entity_to_asm(callee);
+
+                    for arg in args.iter().rev() {
+                        let arg_asm = self.entity_to_asm(arg);
+                        self.text_section
+                            .push_str(&format!("  push qword {}\n", arg_asm));
+                    }
 
                     self.text_section
                         .push_str(&format!("  call {callee_asm}\n"));

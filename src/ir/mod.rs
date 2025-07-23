@@ -5,7 +5,7 @@ use crate::{
     },
     parser::ast::{InfixOperator, PrefixOperator},
 };
-use tac::{BasicBlock, Entity, Instruction, Label, Type, Value};
+use tac::{BasicBlock, Entity, Instruction, Label, Parameter, Type, Value};
 
 pub mod tac;
 
@@ -33,6 +33,7 @@ impl IRGenerator {
             blocks: vec![BasicBlock {
                 label: "ENTRY".to_string(),
                 instructions: vec![],
+                parameters: vec![],
             }],
             current_block: 0,
             variables: vec![],
@@ -61,10 +62,11 @@ impl IRGenerator {
         id
     }
 
-    fn add_block(&mut self, name: &str) -> BlockId {
+    fn add_block(&mut self, name: &str, parameters: Vec<Parameter>) -> BlockId {
         let new_block = BasicBlock {
             label: name.to_string(),
             instructions: vec![],
+            parameters,
         };
         self.blocks.push(new_block);
         self.blocks.len() - 1
@@ -219,7 +221,17 @@ impl IRGenerator {
                 let id = self.get_id();
                 let label = format!("FUN#{}", id);
                 let prev_block = self.current_block;
-                self.current_block = self.add_block(&label);
+                self.current_block = self.add_block(
+                    &label,
+                    parameters
+                        .iter()
+                        .map(|p| {
+                            let ty = self.types[p.type_id].clone();
+                            let name = format!("{}#{}", p.internal_name, p.variable_id);
+                            Parameter { name, ty }
+                        })
+                        .collect(),
+                );
 
                 let entity = self.expression_ir(body);
 
