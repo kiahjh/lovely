@@ -3,46 +3,32 @@ global _start
 
 section .rodata
 
-  main#2: dq FUN#0
+  get_three#0: dq FUN#0
+  main#1: dq FUN#1
 
 section .text
 
 _start:
-  ; goto FUN#0
-  jmp FUN#0
+  ; goto FUN#1
+  jmp FUN#1
 
 
 FUN#0:
   enter 0, 0
 
-  ; y#0 := 3
-  push qword 3
+  ; ret 3
+  mov rax, 3
+  leave
+  ret
 
-  ; t1 := 9 - 3
-  mov rax, 9
-  sub rax, 3
+FUN#1:
+  enter 0, 0
+
+  ; t2 := get_three#0()
+  call [get_three#0]
   push qword rax
 
-  ; t2 := t1 * 4
-  mov rax, [rbp - 16]
-  imul rax, 4
-  push qword rax
-
-  ; t3 := t2 / y#0
-  mov rax, [rbp - 24]
-  cqo
-  idiv qword [rbp - 8]
-  push qword rax
-
-  ; t4 := t3 + 3
-  mov rax, [rbp - 32]
-  add rax, 3
-  push qword rax
-
-  ; x#1 := t4
-  push qword [rbp - 40]
-
-  ; exit x#1
+  ; exit t2
   mov rax, 60
-  mov rdi, [rbp - 48]
+  mov rdi, [rbp - 8]
   syscall

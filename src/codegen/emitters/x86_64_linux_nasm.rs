@@ -11,6 +11,17 @@ pub struct CodeGenerator {
     current_stack_offset: usize,
 }
 
+// return value -> rax
+// arguments -> stack
+
+// foo(2, 3) -> push 3, push 2
+// foo :: fun() -> Int: {
+//   pop -> 2
+//   pop -> 3
+//
+//   mov rax, ret_value
+// }
+
 impl CodeGenerator {
     pub fn new() -> Self {
         Self {
@@ -110,7 +121,8 @@ impl CodeGenerator {
                     self.text_section
                         .push_str(&format!("  mov rax, {dividend_asm}\n"));
                     self.text_section.push_str("  cqo\n");
-                    self.text_section.push_str(&format!("  idiv qword {divisor_asm}\n"));
+                    self.text_section
+                        .push_str(&format!("  idiv qword {divisor_asm}\n"));
                     self.text_section.push_str("  push qword rax\n");
                 } else {
                     unreachable!()
@@ -134,8 +146,18 @@ impl CodeGenerator {
             Instruction::Conditional { .. } => {
                 self.text_section.push_str("  TODO: conditional\n");
             }
-            Instruction::Call { .. } => {
-                self.text_section.push_str("  TODO: call\n");
+            Instruction::Call { dest, callee, args } => {
+                if let Value::Temp(temp_id) = dest.value {
+                    self.allocate_temp_value(temp_id, dest);
+
+                    let callee_asm = self.entity_to_asm(callee);
+
+                    self.text_section
+                        .push_str(&format!("  call {callee_asm}\n"));
+                    self.text_section.push_str(&format!("  push qword rax\n"));
+                } else {
+                    unreachable!()
+                }
             }
             Instruction::Goto(label) => {
                 self.text_section.push_str(&format!("  jmp {label}\n"));

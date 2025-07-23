@@ -1,6 +1,5 @@
-main :: fun () -> Int: {
-  y :: 3
-  x :: { { 9 - 3 } * 4 } / y + 3 # <- 11
+get_three :: fun () -> Int: 3
 
-  x
+main :: fun () -> Int: {
+   get_three()
 }
