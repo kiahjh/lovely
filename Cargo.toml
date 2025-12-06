@@ -1,28 +1,10 @@
 [package]
 name = "lovely"
-version = "0.0.0"
+version = "0.1.0"
 edition = "2024"
-description = "A lovely systems programming language"
-keywords = ["compiler", "language", "systems programming"]
+description = "A delightful low-level systems programming language"
+license = "MIT"
+homepage = "https://lovely-lang.dev"
 repository = "https://github.com/kiahjh/lovely"
-categories = ["compilers"]
-license = "none"
 
 [dependencies]
-clap = { version = "4.5.38", features = ["derive"] }
-colored = "3.0.0"
-pretty_assertions = "1.4.1"
-toml = "0.9.5"
-
-[dev-dependencies]
-insta = "1.43.1"
-
-[lints.clippy]
-pedantic = "warn"
-nursery = "warn"
-perf = "warn"
-correctness = "warn"
-suspicious = "warn"
-style = "warn"
-complexity = "warn"
-cargo = "warn"

@@ -1,4 +1,0 @@
-use numbers#(one)
-
-add :: fun (x: Int, to y: Int) -> Int: x + y
-increment :: fun (x: Int) -> Int: x + one
